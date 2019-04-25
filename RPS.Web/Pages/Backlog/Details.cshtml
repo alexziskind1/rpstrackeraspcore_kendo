@@ -1,0 +1,41 @@
+﻿@page "/{id:int}/{screen}"
+
+@using RPS.Web.Models.Routing;
+@model RPS.Web.Pages.Backlog.DetailsModel
+
+
+<div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <h1 class="h2" id="itemTitle">@Model.Item.Title</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <a asp-page="Details" asp-route-id="@Model.Item.Id" asp-route-screen="Details" class="btn btn-outline-secondary">Details</a>
+                <a asp-page="Details" asp-route-id="@Model.Item.Id" asp-route-screen="Tasks" class="btn btn-outline-secondary">Tasks</a>
+                <a asp-page="Details" asp-route-id="@Model.Item.Id" asp-route-screen="Chitchat" class="btn btn-outline-secondary">Chitchat</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    switch (Model.Screen)
+    {
+        case DetailScreenEnum.Details:
+            <partial name="_Details" model="@Model.DetailsFormVm" />
+            break;
+        case DetailScreenEnum.Tasks:
+            <partial name="_Tasks" model="@Model.TasksFormVm" />
+            break;
+        case DetailScreenEnum.Chitchat:
+            <partial name="_Chitchat" model="@Model.ChitchatFormVm" />
+            break;
+    }
+}
+
+@section styles {
+    <link href="~/css/detail.css" rel="stylesheet" />
+}
+
+@section scripts {
+    <partial name="_TasksScripts" />
+}

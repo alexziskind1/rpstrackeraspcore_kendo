@@ -1,0 +1,31 @@
+﻿@model RPS.Web.Pages.Backlog.PtItemTasksVm
+
+<form method="post">
+    <input type="hidden" asp-for="@Model.ItemId" />
+    <div class="form-row align-items-center">
+        <div class="col-sm-6">
+            <input type="text" asp-for="@Model.NewTaskTitle" class="form-control" placeholder="Enter new task..." />
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </div>
+
+    <hr />
+
+    @foreach (var task in Model.Tasks)
+    {
+        <div class="input-group mb-3 col-sm-8">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="checkbox" asp-for="@task.Completed" id="pt-task-checkbox-@task.Id" />
+                </div>
+            </div>
+
+            <input type="text" asp-for="@task.Title" class="form-control" id="pt-task-input-@task.Id" />
+
+            <div class="input-group-append">
+                <button asp-page-handler="Update" asp-route-taskId="@task.Id" data-task-id="@task.Id" class="btn btn-primary pt-btn-task-update" type="submit">Update</button>
+                <button asp-page-handler="Delete" asp-route-taskId="@task.Id" class="btn btn-danger pt-btn-task-delete" type="submit">Delete</button>
+            </div>
+        </div>
+    }
+</form>
