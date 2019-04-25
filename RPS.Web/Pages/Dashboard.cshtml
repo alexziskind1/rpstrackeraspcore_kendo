@@ -101,13 +101,41 @@
                 <div class="col-sm-12">
                     <h3>All issues</h3>
 
-                    <kendo-chart name="chart">
+                    <kendo-chart name="chart" theme="sass">
                         <chart-title text="All Issues"></chart-title>
+                        
+                        <series-defaults
+                            gap="0.06"
+                            type="ChartSeriesType.Column">
+                            <stack enabled="true" />
+                        </series-defaults>
+
+                        <series>
+                            <series-item 
+                                data="Model.ItemsOpenByMonth" 
+                                name="Open" 
+                                color="#CC3458" 
+                                opacity="0.7">
+                            </series-item>
+                            <series-item  
+                                data="Model.ItemsClosedByMonth"
+                                name="Closed" 
+                                color="#35C473" 
+                                opacity="0.7">
+                            </series-item>
+                        </series>
+
                         <category-axis>
                             <category-axis-item 
-                                categories="Model.Categories">
+                                type="ChartCategoryAxisType.Date" 
+                                categories="Model.Categories"
+                                base-unit="ChartAxisBaseUnit.Weeks">
+                                <major-grid-lines visible="false" />
                             </category-axis-item>
                         </category-axis>
+                        
+                        <chart-legend position="ChartLegendPosition.Bottom"></chart-legend>
+  
                     </kendo-chart>
 
                 </div>
