@@ -28,9 +28,11 @@ namespace RPS.Web.Pages.Backlog
         [BindProperty]
         public string Description { get; set; }
 
-        [Display(Name = "Type")]
         [BindProperty]
         public ItemTypeEnum TypeStr { get; set; }
+
+        [BindProperty]
+        public ItemTypeEnum TypeStr2 { get; set; }
 
         public IEnumerable<SelectListItem> ItemTypes
         {
@@ -45,6 +47,7 @@ namespace RPS.Web.Pages.Backlog
         public void OnGet()
         {
             TypeStr = ItemTypeEnum.Bug;
+            TypeStr2 = ItemTypeEnum.Bug;
         }
 
         public IActionResult OnPost()
