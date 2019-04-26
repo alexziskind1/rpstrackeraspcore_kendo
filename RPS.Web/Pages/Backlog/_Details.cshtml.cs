@@ -42,21 +42,41 @@ namespace RPS.Web.Pages.Backlog
             [Display(Name = "Assignee")]
             public int SelectedAssigneeId { get; set; }
 
-            public IEnumerable<SelectListItem> ItemTypes
+            //This doesn't work with dropdownlist tag helper
+            //public IEnumerable<SelectListItem> ItemTypes
+            //{
+            //    get { return new SelectList(_itemTypes, SelectedItemType); }
+            //}
+
+            public IEnumerable<string> ItemTypes
             {
-                get { return new SelectList(_itemTypes, SelectedItemType); }
+                get { return _itemTypes.Select(i => i.ToString()); }
             }
 
-            public IEnumerable<SelectListItem> Statuses
+            //This doesn't work with dropdownlist tag helper
+            //public IEnumerable<SelectListItem> Statuses
+            //{
+            //    get { return new SelectList(_statuses, SelectedStatus); }
+            //}
+
+            public IEnumerable<string> Statuses
             {
-                get { return new SelectList(_statuses, SelectedStatus); }
+                get { return _statuses.Select(i => i.ToString()); }
             }
 
-            public IEnumerable<SelectListItem> Priorities
+            //This doesn't work with dropdownlist tag helper
+            //public IEnumerable<SelectListItem> Priorities
+            //    {
+            //        get { return new SelectList(_priorities, SelectedPriority); }
+            //    }
+
+            public IEnumerable<string> Priorities
             {
-                get { return new SelectList(_priorities, SelectedPriority); }
+                get { return _priorities.Select(i => i.ToString()); }
             }
 
+            //This works with dropdownlist tag helper because we're binding to object 
+            //and specifying the textfield and valuefield
             public IEnumerable<SelectListItem> Users
             {
                 get { return new SelectList(_users, "Id", "FullName", SelectedAssigneeId); }
