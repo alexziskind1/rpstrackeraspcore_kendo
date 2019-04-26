@@ -19,7 +19,6 @@
 </div>
 
 
-
 @*<kendo-grid name="grid" height="550">
         <datasource type="DataSourceTagHelperType.WebApi" page-size="10" server-operation="false">
             <transport>
@@ -45,7 +44,7 @@
     </kendo-grid>*@
 
 
-@(Html.Kendo().Grid(Model.Items)
+@(Html.Kendo().Grid(Model.GridData)
                 .Name("grid1")
                 .DataSource(dataSource =>
                     dataSource
@@ -55,16 +54,21 @@
                  )
                 .Columns(columns =>
                 {
-
-                    columns.Bound(c => c.Type).Title(" ").Width(40)
-                    .ClientTemplate("<div class='pt-indicator' data-id='#:data.Id#'>#:data.Type#</div>");
-
-                    columns.Bound(p => p.Assignee).Title("Assignee");
+                    columns.Bound(c => c.Type).Title(" ").Width(50);
+                    columns.Bound(p => p.AssigneeAvatar).Title("Assignee").Width(120);
                     columns.Bound(p => p.Title).Title("Title");
-                    columns.Bound(i => i.Priority);
-                    columns.Bound(i => i.Estimate);
-                    columns.Bound(i => i.DateCreated).Title("Created");
+                    columns.Bound(i => i.Priority).Width(100);
+                    columns.Bound(i => i.Estimate).Width(100);
+                    columns.Bound(i => i.DateCreated).Title("Created").Width(160);
                 })
+                .ClientRowTemplate("<tr>" +
+                    "<td><div class='pt-indicator' data-id='#:data.Id#'><img src='#:imageResFromType(data.Type)#' class='backlog-icon' /></div></td>" +
+                        "<td><img src='/#:data.AssigneeAvatar#' class='li-avatar rounded mx-auto d-block' /></td>" +
+                        "<td><span class='li-title'>#:data.Title#</span></td>" +
+                        "<td><span class='badge #:getIndicatorClass(data.Priority)#'>#:data.Priority#</span></td>" +
+                        "<td><span class='li-estimate'>#:data.Estimate#</span></td>" +
+                        "<td><span class='li-date'>#:data.DateCreated.toDateString()#</span></td>" +
+                    "</tr>")
                 .Pageable()
                 .Sortable()
                 .Scrollable(scr => scr.Height(430))
@@ -75,15 +79,15 @@
                 })
 )
 
-<script id="templateItemType" type="text/x-kendo-template">
+@*<script id="templateItemType" type="text/x-kendo-template">
     <div>
         <span>#:data.Type#</span>
     </div>
-</script>
+</script>*@
 
 
 
-<div class="table-responsive">
+@*<div class="table-responsive">
     <table class="table table-striped table-sm table-hover">
         <thead>
             <tr>
@@ -120,7 +124,7 @@
             }
         </tbody>
     </table>
-</div>
+</div>*@
 
 
 @section styles {
@@ -130,8 +134,38 @@
 @section scripts {
 
     <script>
+         function imageResFromType(ptItemType) {
+            switch (ptItemType) {
+                case 'PBI':
+                    return '/images/icon_pbi.png';
+                case 'Bug':
+                    return '/images/icon_bug.png';
+                case 'Chore':
+                    return '/images/icon_chore.png';
+                case 'Impediment':
+                    return '/images/icon_impediment.png';
+                default:
+                    return '';
+            }
+        }
+
+        function getIndicatorClass(priority) {
+            switch (priority) {
+                case 'Critical':
+                    return 'priority-critical';
+                case 'High':
+                    return 'priority-high';
+                case 'Medium':
+                    return 'priority-medium';
+                case 'Low':
+                    return 'priority-low';
+                default:
+                    return '';
+            }
+        }
+
+
         function onChange(arg) {
-            debugger;
             var rows = arg.sender.select();
             var itemId = $($(rows[0]).find('.pt-indicator')[0]).attr('data-id');
             window.location.href = `/${itemId}/Details`;

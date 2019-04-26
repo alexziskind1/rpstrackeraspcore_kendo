@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RPS.Core.Models;
 using RPS.Data;
+using RPS.Web.Models;
 using RPS.Web.Models.Routing;
 
 namespace RPS.Web.Pages.Backlog
@@ -17,6 +18,20 @@ namespace RPS.Web.Pages.Backlog
         private readonly IPtItemsRepository rpsItemsRepo;
 
         public List<PtItem> Items { get; set; }
+
+        public List<PtItemGridModel> GridData
+        {
+            get
+            {
+                if (Items != null)
+                {
+                    return Items.Select(i => new PtItemGridModel(i)).ToList();
+                } else
+                {
+                    return new List<PtItemGridModel>();
+                }
+            }
+        }
 
         [BindProperty(SupportsGet = true)]
         public PresetEnum? Preset { get; set; }
