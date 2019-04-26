@@ -31,12 +31,15 @@ namespace RPS.Web.Pages.Backlog
         [BindProperty]
         public ItemTypeEnum TypeStr { get; set; }
 
-        [BindProperty]
-        public ItemTypeEnum TypeStr2 { get; set; }
-
+        /* This doesn't work with dropdownlist tag helper
         public IEnumerable<SelectListItem> ItemTypes
         {
             get { return new SelectList(_itemTypes, ItemTypeEnum.Bug); }
+        }*/
+
+        public IEnumerable<string> ItemTypes
+        {
+            get { return _itemTypes.Select(i => i.ToString()); }
         }
 
         public CreateModel(IPtItemsRepository rpsItemsData)
@@ -47,7 +50,6 @@ namespace RPS.Web.Pages.Backlog
         public void OnGet()
         {
             TypeStr = ItemTypeEnum.Bug;
-            TypeStr2 = ItemTypeEnum.Bug;
         }
 
         public IActionResult OnPost()

@@ -23,13 +23,15 @@
     <div class="form-group row">
         <label asp-for="@Model.TypeStr" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            <kendo-dropdownlist for="@Model.TypeStr" bind-to="@Model.ItemTypes"></kendo-dropdownlist>
 
-            @(Html.Kendo().DropDownList()
-                       .Name("TypeStr2")
-                      .BindTo(Model.ItemTypes)
-            )
+            @*html helper*@
+            @*@(Html.Kendo().DropDownList()
+                   .Name("TypeStr")
+                  .BindTo(Model.ItemTypes)
+            )*@
 
+            @*tag helper*@
+            <kendo-dropdownlist name="TypeStr" value="@Model.TypeStr" bind-to="Model.ItemTypes"></kendo-dropdownlist>
 
         </div>
     </div>
