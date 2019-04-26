@@ -18,6 +18,71 @@
     </div>
 </div>
 
+
+
+@*<kendo-grid name="grid" height="550">
+        <datasource type="DataSourceTagHelperType.WebApi" page-size="10" server-operation="false">
+            <transport>
+                <read data="[{ id: 1, title: ''Hello' }]" />
+            </transport>
+
+            <schema>
+                <model id="id">
+                    <fields>
+                        <field name="id" type="number"></field>
+                        <field name="title" type="string"></field>
+                    </fields>
+                </model>
+            </schema>
+
+        </datasource>
+
+        <columns>
+            <column field="title" title="Title" />
+
+        </columns>
+
+    </kendo-grid>*@
+
+
+@(Html.Kendo().Grid(Model.Items)
+                .Name("grid1")
+                .DataSource(dataSource =>
+                    dataSource
+                        .Ajax()
+                        .PageSize(10)
+                        .ServerOperation(false)
+                 )
+                .Columns(columns =>
+                {
+
+                    columns.Bound(c => c.Type).Title(" ").Width(40)
+                    .ClientTemplate("<div class='pt-indicator' data-id='#:data.Id#'>#:data.Type#</div>");
+
+                    columns.Bound(p => p.Assignee).Title("Assignee");
+                    columns.Bound(p => p.Title).Title("Title");
+                    columns.Bound(i => i.Priority);
+                    columns.Bound(i => i.Estimate);
+                    columns.Bound(i => i.DateCreated).Title("Created");
+                })
+                .Pageable()
+                .Sortable()
+                .Scrollable(scr => scr.Height(430))
+                .Selectable()
+                .Events(events =>
+                {
+                    events.Change("onChange");
+                })
+)
+
+<script id="templateItemType" type="text/x-kendo-template">
+    <div>
+        <span>#:data.Type#</span>
+    </div>
+</script>
+
+
+
 <div class="table-responsive">
     <table class="table table-striped table-sm table-hover">
         <thead>
@@ -62,3 +127,15 @@
     <link href="~/css/backlog.css" rel="stylesheet" />
 }
 
+@section scripts {
+
+    <script>
+        function onChange(arg) {
+            debugger;
+            var rows = arg.sender.select();
+            var itemId = $($(rows[0]).find('.pt-indicator')[0]).attr('data-id');
+            window.location.href = `/${itemId}/Details`;
+        }
+    </script>
+
+}
