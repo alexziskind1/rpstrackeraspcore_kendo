@@ -53,7 +53,7 @@ namespace RPS.Data
             TimeSpan timeSpan = endDate - startDate;
 
 
-            items.ForEach(i =>
+            items.ForEach(i => 
             {
                 TimeSpan newSpan = new TimeSpan(0, randomTest.Next(0, (int)timeSpan.TotalMinutes), 0);
                 DateTime newDate = startDate + newSpan;
