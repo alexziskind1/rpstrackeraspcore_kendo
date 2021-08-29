@@ -35,8 +35,7 @@
                                 datavaluefield="Id"
                                 on-change="onAssigneeChange"
                                 style="width: 260px;"
-                                template-id="templateAssignee"
-                                >
+                                template-id="templateAssignee">
                 </kendo-combobox>
 
             </div>
@@ -49,35 +48,35 @@
         </div>
     </div>
 
-
-    <div class="card">
-        <h3 class="card-header">Active Issues</h3>
-        <div class="card-block">
-
-            <div class="row">
-
-                <div class="col-12 col-lg-6 col-xl pb-4 active-issues">
+    <script id="tmplActiveIssues" type="text/x-kendo-template">
+                        <div class="active-issues">
                     <span class="comp-label">
                         <strong>@Model.IssueCountActive</strong>
                         <small>Active issues</small>
                     </span>
                 </div>
+    </script>
 
-                <div class="col-12 col-lg-6 col-xl pb-4 text-success closed-issues">
+    <script id="tmplClosedIssues" type="text/x-kendo-template">
+                <div class="text-success closed-issues">
                     <span class="comp-label">
                         <strong>@Model.IssueCountClosed</strong>
                         <small>Closed issues</small>
                     </span>
                 </div>
+    </script>
 
-                <div class="col-12 col-lg-6 col-xl pb-4 text-danger open-issues">
+    <script id="tmplOpenIssues" type="text/x-kendo-template">
+                <div class="text-danger open-issues">
                     <span class="comp-label">
                         <strong>@Model.IssueCountOpen</strong>
                         <small>Open issues</small>
                     </span>
                 </div>
+    </script>
 
-                <div class="col-12 col-lg-6 col-xl pb-4 close-rate">
+    <script id="tmplCloseRate" type="text/x-kendo-template">
+                <div class="close-rate">
                     <span class="comp-label">
                         <strong>@Model.IssueCloseRate</strong>
                         <small>Close rate</small>
@@ -92,57 +91,62 @@
                         20%
                         on Oct 9, 2018
                     </p>
-
                 </div>
+    </script>
 
-            </div>
+    <script id="tmplChart" type="text/html">
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <h3>All issues</h3>
+        <kendo-chart name="chart2" theme="sass"  is-in-client-template="true">
+            <chart-title text="All Issues"></chart-title>
 
-                    <kendo-chart name="chart" theme="sass">
-                        <chart-title text="All Issues"></chart-title>
-                        
-                        <series-defaults
-                            gap="0.06"
-                            type="ChartSeriesType.Column">
-                            <stack enabled="true" />
-                        </series-defaults>
+            <series-defaults gap="0.06"
+                type="ChartSeriesType.Column">
+                <stack enabled="true" />
+            </series-defaults>
 
-                        <series>
-                            <series-item 
-                                data="Model.ItemsOpenByMonth" 
-                                name="Open" 
-                                color="#CC3458" 
-                                opacity="0.7">
-                            </series-item>
-                            <series-item  
-                                data="Model.ItemsClosedByMonth"
-                                name="Closed" 
-                                color="#35C473" 
-                                opacity="0.7">
-                            </series-item>
-                        </series>
+            <series>
+                <series-item data="Model.ItemsOpenByMonth"
+                    name="Open"
+                    color="#CC3458"
+                    opacity="0.7">
+                </series-item>
+                <series-item data="Model.ItemsClosedByMonth"
+                    name="Closed"
+                    color="#35C473"
+                    opacity="0.7">
+                </series-item>
+            </series>
 
-                        <category-axis>
-                            <category-axis-item 
-                                type="ChartCategoryAxisType.Date" 
-                                categories="Model.Categories"
-                                base-unit="ChartAxisBaseUnit.Months">
-                                <major-grid-lines visible="false" />
-                            </category-axis-item>
-                        </category-axis>
-                        
-                        <chart-legend position="ChartLegendPosition.Bottom"></chart-legend>
-  
-                    </kendo-chart>
+            <category-axis>
+                <category-axis-item type="ChartCategoryAxisType.Date"
+                    categories="Model.Categories"
+                    base-unit="ChartAxisBaseUnit.Months">
+                    <major-grid-lines visible="false" />
+                </category-axis-item>
+            </category-axis>
 
-                </div>
-            </div>
+            <chart-legend position="ChartLegendPosition.Bottom"></chart-legend>
 
-        </div>
-    </div>
+        </kendo-chart>
+
+    </script>
+
+
+    @(Html.Kendo().TileLayout()
+        .Name("tilelayout")
+        .Columns(4)
+        .Containers(c => {
+            c.Add().Header(h => h.Text("ACTIVE")).BodyTemplateId("tmplActiveIssues");
+            c.Add().Header(h => h.Text("CLOSED")).BodyTemplateId("tmplClosedIssues");
+            c.Add().Header(h => h.Text("OPEN")).BodyTemplateId("tmplOpenIssues");
+            c.Add().Header(h => h.Text("CLOSE RATE")).BodyTemplateId("tmplCloseRate");
+            c.Add().Header(h => h.Text("ALL")).BodyTemplateId("tmplChart");
+        })
+        .Reorderable(true)
+        .Resizable(true)
+    )
+
+
 
 </div>
 
