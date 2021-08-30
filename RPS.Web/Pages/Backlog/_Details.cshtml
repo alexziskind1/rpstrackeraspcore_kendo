@@ -28,12 +28,11 @@
     <div class="form-group row">
         <label asp-for="@Model.SelectedItemType" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
-            <kendo-dropdownlist 
-                name="SelectedItemType" 
-                value="@Model.SelectedItemType" 
-                bind-to="Model.ItemTypes" 
-                template-id="templateItemType"
-                style="width: 100%;">
+            <kendo-dropdownlist name="SelectedItemType"
+                                value="@Model.SelectedItemType"
+                                bind-to="Model.ItemTypes"
+                                template-id="templateItemType"
+                                style="width: 100%;">
             </kendo-dropdownlist>
         </div>
     </div>
@@ -41,11 +40,10 @@
     <div class="form-group row">
         <label asp-for="@Model.SelectedStatus" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
-            <kendo-dropdownlist 
-                name="SelectedStatus" 
-                value="@Model.SelectedStatus" 
-                bind-to="Model.Statuses" 
-                style="width: 100%;">
+            <kendo-dropdownlist name="SelectedStatus"
+                                value="@Model.SelectedStatus"
+                                bind-to="Model.Statuses"
+                                style="width: 100%;">
             </kendo-dropdownlist>
         </div>
     </div>
@@ -53,12 +51,11 @@
     <div class="form-group row">
         <label asp-for="@Model.SelectedPriority" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
-            <kendo-dropdownlist 
-                name="SelectedPriority" 
-                value="@Model.SelectedPriority" 
-                bind-to="Model.Priorities" 
-                template="<span class='badge priority-#:data.toLowerCase()#'>#: data #</span>"
-                style="width: 100%;">
+            <kendo-dropdownlist name="SelectedPriority"
+                                value="@Model.SelectedPriority"
+                                bind-to="Model.Priorities"
+                                template="<span class='badge priority-#:data.toLowerCase()#'>#: data #</span>"
+                                style="width: 100%;">
             </kendo-dropdownlist>
         </div>
     </div>
@@ -67,6 +64,23 @@
         <label asp-for="@Model.SelectedAssigneeId" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
             <kendo-dropdownlist name="SelectedAssigneeId" value="@Model.SelectedAssigneeId" bind-to="Model.Users" style="width: 100%;"></kendo-dropdownlist>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="attachment" class="col-sm-2 col-form-label">Attachment</label>
+        <div class="col-sm-6">
+            @(Html.Kendo().Upload()
+                .Name("file")
+                .Multiple(false)
+                .Async(a => a
+                    .Save("Save", "Upload")
+                    .Remove("Remove", "Upload")
+                    .AutoUpload(true)
+                )
+                .Validation(validation => validation.AllowedExtensions(new string[] { ".jpg", ".png", ".jpeg" }))
+                .Validation(validation => validation.MaxFileSize(200000000))
+            )
         </div>
     </div>
 
