@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -39,17 +39,20 @@ namespace RPS.Web.Pages.Backlog
         [BindProperty]
         public PtItemCommentsVm ChitchatFormVm { get; set; }
 
+        private readonly IWebHostEnvironment webHostEnvironment;
 
         public DetailsModel(
             IPtUserRepository rpsUserData,
             IPtItemsRepository rpsItemsData,
             IPtTasksRepository rpsTasksData,
-            IPtCommentsRepository rpsCommentsData)
+            IPtCommentsRepository rpsCommentsData,
+            IWebHostEnvironment webHostEnvironment)
         {
             rpsUserRepo = rpsUserData;
             rpsItemsRepo = rpsItemsData;
             rpsTasksRepo = rpsTasksData;
             rpsCommentsRepo = rpsCommentsData;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult OnGet(int id)
@@ -84,20 +87,24 @@ namespace RPS.Web.Pages.Backlog
 
         public ActionResult OnPostSave(IEnumerable<IFormFile> file)
         {
+            string uploads = Path.Combine(webHostEnvironment.WebRootPath, "uploads");
+
             // The Name of the Upload component is "files"
             if (file != null)
             {
-                foreach (var f in file)
+                foreach (FormFile f in file)
                 {
                     var fileContent = ContentDispositionHeaderValue.Parse(f.ContentDisposition);
 
                     //// Some browsers send file names with full path.
                     //// We are only interested in the file name.
                     var fileName = Path.GetFileName(fileContent.FileName.Trim('"'));
-                    var physicalPath = Path.Combine("App_Data", fileName);
+                    var physicalPath = Path.Combine(uploads, fileName);
 
-                    //// The files are not actually saved in this demo
-                    ////file.SaveAs(physicalPath);
+                    using (Stream fileStream = new FileStream(physicalPath, FileMode.Create))
+                    {
+                         f.CopyToAsync(fileStream);
+                    }
                 }
             }
 
