@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RPS.Core.Models;
@@ -77,6 +80,30 @@ namespace RPS.Web.Pages.Backlog
                     break;
             }
             return RedirectToPage("Details", new { id = DetailsFormVm.Id, Screen });
+        }
+
+        public ActionResult OnPostSave(IEnumerable<IFormFile> file)
+        {
+            // The Name of the Upload component is "files"
+            if (file != null)
+            {
+                foreach (var f in file)
+                {
+                    var fileContent = ContentDispositionHeaderValue.Parse(f.ContentDisposition);
+
+                    //// Some browsers send file names with full path.
+                    //// We are only interested in the file name.
+                    var fileName = Path.GetFileName(fileContent.FileName.Trim('"'));
+                    var physicalPath = Path.Combine("App_Data", fileName);
+
+                    //// The files are not actually saved in this demo
+                    ////file.SaveAs(physicalPath);
+                }
+            }
+
+            // Return an empty string to signify success
+            return Content("");
+
         }
 
         public IActionResult OnPostUpdate(int taskId, string title, bool? completed)
