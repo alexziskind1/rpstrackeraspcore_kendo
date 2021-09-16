@@ -67,20 +67,20 @@
         </div>
     </div>
 
+
     <div class="form-group row">
-        <label for="attachment" class="col-sm-2 col-form-label">Attachment</label>
+        <label for="attachments" class="col-sm-2 col-form-label">Attachments</label>
         <div class="col-sm-6">
             @(Html.Kendo().Upload()
-				.Name("file")
-				.Multiple(false)
-				.Async(a => a
-					.SaveUrl("./DetailsModel?handler=Save")
-					.RemoveUrl("./DetailsModel?handler=Remove")
-					.AutoUpload(true)
-				)
-				.Validation(validation => validation.AllowedExtensions(new string[] { ".jpg", ".png", ".jpeg" }))
-				.Validation(validation => validation.MaxFileSize(200000000))
-            )
+                .Name("files")
+                .Multiple(true)
+                .Async(a => a
+                    .SaveUrl("./DetailsModel?handler=Upload")
+                    .AutoUpload(true)
+                )
+                .Validation(validation => validation.AllowedExtensions(new string[] { ".jpg", ".png", ".jpeg" }))
+                .Validation(validation => validation.MaxFileSize(200000000))
+                )
         </div>
     </div>
 

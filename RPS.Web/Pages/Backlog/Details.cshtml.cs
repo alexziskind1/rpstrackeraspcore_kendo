@@ -46,13 +46,37 @@ namespace RPS.Web.Pages.Backlog
             IPtItemsRepository rpsItemsData,
             IPtTasksRepository rpsTasksData,
             IPtCommentsRepository rpsCommentsData,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment
+            )
         {
             rpsUserRepo = rpsUserData;
             rpsItemsRepo = rpsItemsData;
             rpsTasksRepo = rpsTasksData;
             rpsCommentsRepo = rpsCommentsData;
             this.webHostEnvironment = webHostEnvironment;
+        }
+
+        public ActionResult OnPostUpload(IEnumerable<IFormFile> files)
+        {
+            var uploads = Path.Combine(webHostEnvironment.WebRootPath, "uploads");
+
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    var fileContent = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
+                    var fileName = Path.GetFileName(fileContent.FileName.Trim('"'));
+
+                    var physicalPath = Path.Combine(uploads, fileName);
+
+                    using (Stream fileStream = new FileStream(physicalPath, FileMode.Create))
+                    {
+                        file.CopyToAsync(fileStream);
+                    }
+                }
+            }
+
+            return Content("");
         }
 
         public IActionResult OnGet(int id)
@@ -83,34 +107,6 @@ namespace RPS.Web.Pages.Backlog
                     break;
             }
             return RedirectToPage("Details", new { id = DetailsFormVm.Id, Screen });
-        }
-
-        public ActionResult OnPostSave(IEnumerable<IFormFile> file)
-        {
-            string uploads = Path.Combine(webHostEnvironment.WebRootPath, "uploads");
-
-            // The Name of the Upload component is "files"
-            if (file != null)
-            {
-                foreach (FormFile f in file)
-                {
-                    var fileContent = ContentDispositionHeaderValue.Parse(f.ContentDisposition);
-
-                    //// Some browsers send file names with full path.
-                    //// We are only interested in the file name.
-                    var fileName = Path.GetFileName(fileContent.FileName.Trim('"'));
-                    var physicalPath = Path.Combine(uploads, fileName);
-
-                    using (Stream fileStream = new FileStream(physicalPath, FileMode.Create))
-                    {
-                         f.CopyToAsync(fileStream);
-                    }
-                }
-            }
-
-            // Return an empty string to signify success
-            return Content("");
-
         }
 
         public IActionResult OnPostUpdate(int taskId, string title, bool? completed)
