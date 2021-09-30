@@ -96,31 +96,31 @@
 
     <script id="tmplChart" type="text/html">
 
-        <kendo-chart name="chart2" theme="sass"  is-in-client-template="true">
+        <kendo-chart name="chart2" theme="sass" is-in-client-template="true">
             <chart-title text="All Issues"></chart-title>
 
             <series-defaults gap="0.06"
-                type="ChartSeriesType.Column">
+                             type="ChartSeriesType.Column">
                 <stack enabled="true" />
             </series-defaults>
 
             <series>
                 <series-item data="Model.ItemsOpenByMonth"
-                    name="Open"
-                    color="#CC3458"
-                    opacity="0.7">
+                             name="Open"
+                             color=\\#CC3458
+                             opacity="0.7">
                 </series-item>
                 <series-item data="Model.ItemsClosedByMonth"
-                    name="Closed"
-                    color="#35C473"
-                    opacity="0.7">
+                             name="Closed"
+                             color=\\#35C473
+                             opacity="0.7">
                 </series-item>
             </series>
 
             <category-axis>
                 <category-axis-item type="ChartCategoryAxisType.Date"
-                    categories="Model.Categories"
-                    base-unit="ChartAxisBaseUnit.Months">
+                                    categories="Model.Categories"
+                                    base-unit="ChartAxisBaseUnit.Months">
                     <major-grid-lines visible="false" />
                 </category-axis-item>
             </category-axis>
@@ -133,18 +133,31 @@
 
 
     @(Html.Kendo().TileLayout()
-        .Name("tilelayout")
-        .Columns(4)
-        .Containers(c => {
-            c.Add().Header(h => h.Text("ACTIVE")).BodyTemplateId("tmplActiveIssues");
-            c.Add().Header(h => h.Text("CLOSED")).BodyTemplateId("tmplClosedIssues");
-            c.Add().Header(h => h.Text("OPEN")).BodyTemplateId("tmplOpenIssues");
-            c.Add().Header(h => h.Text("CLOSE RATE")).BodyTemplateId("tmplCloseRate");
-            c.Add().Header(h => h.Text("ALL")).BodyTemplateId("tmplChart");
-        })
-        .Reorderable(true)
-        .Resizable(true)
-    )
+
+                .Name("tilelayout")
+
+                .Columns(4)
+
+                .Containers(c => {
+
+                                c.Add().Header(h => h.Text("ACTIVE")).BodyTemplateId("tmplActiveIssues").ColSpan(1).RowSpan(1);
+
+                                c.Add().Header(h => h.Text("CLOSED")).BodyTemplateId("tmplClosedIssues").ColSpan(1).RowSpan(1);
+
+                                c.Add().Header(h => h.Text("OPEN")).BodyTemplateId("tmplOpenIssues").ColSpan(1).RowSpan(1);
+
+                                c.Add().Header(h => h.Text("CLOSE RATE")).BodyTemplateId("tmplCloseRate").ColSpan(1).RowSpan(1);
+
+                                c.Add().Header(h => h.Text("ALL")).BodyTemplateId("tmplChart").ColSpan(4).RowSpan(1);
+
+                })
+
+                .Reorderable(true)
+
+                .Resizable(true)
+                .Events(e => e.Resize("onTileResize"))
+
+       )
 
 
 
@@ -189,10 +202,31 @@
             }
         }
 
+        //initially resize the Chart
+        /*$(document).ready(function (e) {
+            debugger;
+            setTimeout(() => {
+                kendo.resize($(".k-chart"));
+            }, 1000);
+        });
+        */
 
+
+        //resize the Chart on tile resize
+        function onTileResize(e) {
+
+            kendo.resize(e.container, true);
+
+        }
+
+        $(document).ready(function () {
+
+            kendo.resize($(".k-chart"));
+
+        });
 
         function onFilterItemClick(months) {
-              location.href = `/?months=${months}@Html.Raw(userIdParam)`;
+            location.href = `/?months=${months}@Html.Raw(userIdParam)`;
         }
 
     </script>
