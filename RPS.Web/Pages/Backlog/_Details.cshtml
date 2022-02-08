@@ -7,14 +7,16 @@
     <div class="form-group row">
         <label asp-for="@Model.Title" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
-            <input type="text" asp-for="@Model.Title" class="k-textbox" style="width: 100%;" />
+            <kendo-textbox name="Title" value="@Model.Title" style="width: 100%;">
+            </kendo-textbox>
         </div>
     </div>
 
     <div class="form-group row">
         <label asp-for="@Model.Description" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
-            <textarea asp-for="@Model.Description" class="k-textbox" style="width: 100%;height:60px;"></textarea>
+            <kendo-textarea name="Description" rows="3" value="@Model.Description" style="width: 100%;height:60px;">
+            </kendo-textarea>
         </div>
     </div>
 
