@@ -6,45 +6,40 @@
     var months = ViewData["months"];
 }
 
-<div class="dashboard">
+<div class="dashboard-page page">
 
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-
-        <div class="col-md order-md-first text-center text-md-left">
-            <h2>
-                <span class="small text-uppercase text-muted d-block">Statistics</span>
-                @if (Model.DateStart.HasValue && Model.DateEnd.HasValue)
-                {
-                    <span id="spanFilteredDateRange">
-                        @Model.DateStart.Value.ToString("MMM d, yyyy") - @Model.DateEnd.Value.ToString("MMM d, yyyy")
-                    </span>
-                }
-
-            </h2>
-        </div>
-
-
-
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group mr-2">
-                <kendo-combobox name="filterAssignee" filter="FilterType.Contains"
-                                bind-to="Model.Assignees"
-                                value="@Model.SelectedAssigneeId"
-                                placeholder="Select assignee.."
-                                datatextfield="FullName"
-                                datavaluefield="Id"
-                                on-change="onAssigneeChange"
-                                style="width: 260px;"
-                                template-id="templateAssignee"
-                                >
-                </kendo-combobox>
-
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-auto">
+                <div class="frame13 d-flex flex-column align-items-start gap-2">
+                    <div class="page-title">Dashboard</div>
+                </div>
             </div>
 
-            <div class="btn-group mr-2">
-                <kendo-button name="btnFilterMonths3" on-click="function() { location.href = '/?months=3&userId=@userId'; }" icon="calendar">3 Months</kendo-button>
-                <kendo-button name="btnFilterMonths6" on-click="function() { location.href = '/?months=6&userId=@userId'; }" icon="calendar">6 Months</kendo-button>
-                <kendo-button name="btnFilterMonths12" on-click="function() { location.href = '/?months=12&userId=@userId'; }" icon="calendar">1 Year</kendo-button>
+            <div class="col-auto">
+                <div class="Tools d-flex gap-3">
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <kendo-combobox name="filterAssignee" filter="FilterType.Contains"
+                                            bind-to="Model.Assignees"
+                                            value="@Model.SelectedAssigneeId"
+                                            placeholder="Select assignee.."
+                                            datatextfield="FullName"
+                                            datavaluefield="Id"
+                                            on-change="onAssigneeChange"
+                                            style="width: 260px;"
+                                            template-id="templateAssignee"
+                                            >
+                            </kendo-combobox>
+                        </div>
+
+                        <div class="btn-group mr-2">
+                            <kendo-button name="btnFilterMonths3" on-click="function() { location.href = '/?months=3&userId=@userId'; }" icon="calendar">3 Months</kendo-button>
+                            <kendo-button name="btnFilterMonths6" on-click="function() { location.href = '/?months=6&userId=@userId'; }" icon="calendar">6 Months</kendo-button>
+                            <kendo-button name="btnFilterMonths12" on-click="function() { location.href = '/?months=12&userId=@userId'; }" icon="calendar">1 Year</kendo-button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

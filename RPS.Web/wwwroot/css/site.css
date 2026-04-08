@@ -1,117 +1,74 @@
-﻿
-.logo {
-    width: 100px;
+html, body {
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
 }
 
-.feather {
-    width: 16px;
-    height: 16px;
-    vertical-align: text-bottom;
+a {
+    text-decoration: none;
 }
 
-/*
-   * Sidebar
-   */
-
-.sidebar {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 100; /* Behind the navbar */
-    padding: 67px 0 0; /* Height of navbar */
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
 }
 
-.sidebar-sticky {
-    position: relative;
-    top: 0;
-    height: calc(100vh - 67px);
-    padding-top: .5rem;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/Roboto/Roboto-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
 }
 
-@supports ((position: -webkit-sticky) or (position: sticky)) {
-    .sidebar-sticky {
-        position: -webkit-sticky;
-        position: sticky;
-    }
-}
-
-.sidebar .nav-link {
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/Roboto/Roboto-Medium.ttf') format('truetype');
     font-weight: 500;
-    color: #333;
+    font-style: normal;
 }
 
-    .sidebar .nav-link .feather {
-        margin-right: 4px;
-        color: #999;
-    }
-
-    .sidebar .nav-link.active {
-        color: #007bff;
-    }
-
-        .sidebar .nav-link:hover .feather,
-        .sidebar .nav-link.active .feather {
-            color: inherit;
-        }
-
-.sidebar-heading {
-    font-size: .75rem;
-    text-transform: uppercase;
+@font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/Roboto/Roboto-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
 }
 
-/*
-   * Content
-   */
 
-[role="main"] {
-    padding-top: 133px; /* Space for fixed navbar */
+.frame13 {
+    width: 500px;
 }
 
-@media (min-width: 768px) {
-    [role="main"] {
-        padding-top: 67px; /* Space for fixed navbar */
-    }
+.page .container {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-/*
-   * Navbar
-   */
-
-.navbar-brand {
-    padding-top: .75rem;
-    padding-bottom: .75rem;
-    font-size: 1rem;
-    background-color: rgba(0, 0, 0, .25);
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+.page-title {
+    color: #3D3D3D;
+    font-size: 40px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
 }
 
-.navbar .form-control {
-    padding: .75rem 1rem;
-    border-width: 0;
-    border-radius: 0;
+.nav-item > .app-bar-nav-link {
+    text-align: center;
+    color: #068597 !important;
+    font-size: 16px;
+    font-family: Roboto;
+    font-weight: 500;
+    line-height: 24px;
+    word-wrap: break-word;
 }
-
-.form-control-dark {
-    color: #fff;
-    background-color: rgba(255, 255, 255, .1);
-    border-color: rgba(255, 255, 255, .1);
-}
-
-    .form-control-dark:focus {
-        border-color: transparent;
-        box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
-    }
-
 
 .li-avatar {
     background-color: #eeeeee;
     width: 40px;
     height: 40px;
+    padding-left: 0;
+    padding-right: 0;
 }
+
 
 .li-estimate {
     font-size: 10px;
@@ -164,4 +121,85 @@
 .modal-body {
     max-height: 400px;
     overflow: scroll;
+}
+
+.rps-text-area {
+    width: 100%;
+    height: 60px;
+}
+
+.feather {
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
+}
+
+/*
+ * Navbar
+ */
+
+.rps-navbar-brand {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    font-size: 1rem;
+}
+
+.navbar .form-control {
+    padding: .75rem 1rem;
+    border-width: 0;
+    border-radius: 0;
+}
+
+.form-control-dark {
+    color: #fff;
+    background-color: rgba(255, 255, 255, .1);
+    border-color: rgba(255, 255, 255, .1);
+}
+
+    .form-control-dark:focus {
+        border-color: transparent;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+    }
+
+.logo {
+    width: 100px;
+}
+
+/* Extracted styles from App.tsx */
+.page {
+    width: 100%;
+}
+
+.backlog-container {
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: inline-flex;
+}
+
+.app-header {
+    background: rgba(3.84, 86.84, 98.16, 0.06);
+    box-shadow: 0px 6px 13px rgba(0, 0, 0, 0.12);
+    width: 100%;
+}
+
+.main-content-wrapper {
+    width: 1440px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: inline-flex;
+}
+
+.content-container {
+    flex: 1 1 0;
+    align-self: stretch;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: normal;
+    gap: 24px;
+    display: inline-flex;
 }
