@@ -1,0 +1,60 @@
+.chitchat-item {
+    margin-bottom: 30px;
+    width: 600px;
+}
+
+.chitchat-text {
+    color: #495057;
+    font-size: .9em;
+}
+
+.new-comment-form {
+    width: 600px;
+}
+
+.comment-input-container, .comment-item-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.comment-textarea {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    background-color: white;
+}
+
+    .comment-textarea:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    }
+
+    .comment-textarea::placeholder {
+        color: #6c757d;
+    }
+
+.comment-button-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 12px;
+    padding-left: 52px; /* Account for avatar width + gap */
+}
+
+.comment-date {
+    color: #555a97;
+    margin-left: 10px;
+}
