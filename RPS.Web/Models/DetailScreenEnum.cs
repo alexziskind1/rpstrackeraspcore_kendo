@@ -2,7 +2,7 @@
 {
     public enum DetailScreenEnum
     {
-        Details,
+        Form,
         Tasks,
         Chitchat
     }

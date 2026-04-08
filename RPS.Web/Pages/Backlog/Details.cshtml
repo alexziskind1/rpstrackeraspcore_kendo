@@ -29,10 +29,10 @@
 <kendo-tabstrip name="tabstrip">
     <items>
 
-        <tabstrip-item 
-            text="Details" 
-            selected="@Model.Screen == DetailScreenEnum.Details" 
-            onclick="pushUrl('RPS Project Tracker', '/@Model.Item.Id/Details')">
+        <tabstrip-item
+            text="Form"
+            selected="@Model.Screen == DetailScreenEnum.Form"
+            onclick="pushUrl('RPS Project Tracker', '/@Model.Item.Id/Form')">
 
             <content>
                 <partial name="_Details" model="@Model.DetailsFormVm" />
@@ -65,7 +65,7 @@
 @*@{
             switch (Model.Screen)
             {
-                case DetailScreenEnum.Details:
+                case DetailScreenEnum.Form:
     <partial name="_Details" model="@Model.DetailsFormVm" />
                 break;
             case DetailScreenEnum.Tasks:

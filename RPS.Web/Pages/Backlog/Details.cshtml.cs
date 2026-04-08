@@ -66,7 +66,7 @@ namespace RPS.Web.Pages.Backlog
         {
             switch (Screen)
             {
-                case DetailScreenEnum.Details:
+                case DetailScreenEnum.Form:
                     SaveDetails();
                     break;
                 case DetailScreenEnum.Tasks:
