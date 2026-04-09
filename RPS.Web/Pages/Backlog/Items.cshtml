@@ -115,7 +115,7 @@
         <tbody>
             @foreach (var item in Model.Items)
             {
-                <tr class="pt-table-row" onclick="location.href = '/@item.Id/Details'">
+                <tr class="pt-table-row" onclick="location.href = '/Detail/@item.Id'">
 
                     <td>
                         <item-type-indicator item-type="@item.Type" class="backlog-icon"></item-type-indicator>
@@ -180,7 +180,7 @@
         function onChange(arg) {
             var rows = arg.sender.select();
             var itemId = $($(rows[0]).find('.pt-indicator')[0]).attr('data-id');
-            window.location.href = `/${itemId}/Details`;
+            window.location.href = `/Detail/${itemId}`;
         }
     </script>
 

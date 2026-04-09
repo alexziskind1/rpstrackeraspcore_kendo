@@ -9,8 +9,8 @@
         let taskId = btnObj.attr('data-task-id');
         let newTitle = $('#pt-task-input-' + taskId).val();
         let checked = $('#pt-task-checkbox-' + taskId).prop('checked');
-        //  /7/Tasks?taskId=1&handler=Update
-        btnObj.attr('formaction', `/${itemId}/Tasks?handler=Update&taskId=${taskId}&completed=${checked}&title=${newTitle}`);
+        //  /Detail/7/Tasks?taskId=1&handler=Update
+        btnObj.attr('formaction', `/Detail/${itemId}/Tasks?handler=Update&taskId=${taskId}&completed=${checked}&title=${newTitle}`);
     }, false);
 
 </script>

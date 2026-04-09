@@ -23,7 +23,7 @@ namespace RPS.Web.Pages.Backlog
         public PtItem Item { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public DetailScreenEnum Screen { get; set; }
+        public DetailScreenEnum Screen { get; set; } = DetailScreenEnum.Form;
 
         public List<PtUser> Users { get; set; }
 

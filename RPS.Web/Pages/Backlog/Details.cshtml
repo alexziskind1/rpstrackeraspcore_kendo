@@ -1,4 +1,4 @@
-﻿@page "/{id:int}/{screen}"
+﻿@page "/Detail/{id:int}/{screen?}"
 
 @using RPS.Web.Models.Routing;
 @model RPS.Web.Pages.Backlog.DetailsModel
@@ -32,7 +32,7 @@
         <tabstrip-item
             text="Form"
             selected="@Model.Screen == DetailScreenEnum.Form"
-            onclick="pushUrl('RPS Project Tracker', '/@Model.Item.Id/Form')">
+            onclick="pushUrl('RPS Project Tracker', '/Detail/@Model.Item.Id')">
 
             <content>
                 <partial name="_Details" model="@Model.DetailsFormVm" />
@@ -42,7 +42,7 @@
         <tabstrip-item 
             text="Tasks" 
             selected="@Model.Screen == DetailScreenEnum.Tasks" 
-            onclick="pushUrl('RPS Project Tracker', '/@Model.Item.Id/Tasks')">
+            onclick="pushUrl('RPS Project Tracker', '/Detail/@Model.Item.Id/Tasks')">
 
             <content>
                 <partial name="_Tasks" model="@Model.TasksFormVm" />
@@ -52,7 +52,7 @@
         <tabstrip-item 
             text="Chitchat" 
             selected="@Model.Screen == DetailScreenEnum.Chitchat" 
-            onclick="pushUrl('RPS Project Tracker', '/@Model.Item.Id/Chitchat')">
+            onclick="pushUrl('RPS Project Tracker', '/Detail/@Model.Item.Id/Chitchat')">
 
             <content>
                 <partial name="_Chitchat" model="@Model.ChitchatFormVm" />
