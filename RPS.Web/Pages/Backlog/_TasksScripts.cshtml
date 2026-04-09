@@ -1,16 +1,21 @@
-﻿<script>
+<script>
 
     document.addEventListener('click', function (event) {
 
-        if (!event.target.matches('.pt-btn-task-update')) return;
+        // Check if the clicked element or its parent is the update button
+        let targetElement = event.target;
+        if (!targetElement.matches('.pt-btn-task-update')) {
+            targetElement = targetElement.closest('.pt-btn-task-update');
+            if (!targetElement) return;
+        }
 
-        let btnObj = $(event.target);
+        let btnObj = $(targetElement);
         let itemId = $('#ItemId').val();
         let taskId = btnObj.attr('data-task-id');
         let newTitle = $('#pt-task-input-' + taskId).val();
         let checked = $('#pt-task-checkbox-' + taskId).prop('checked');
-        //  /Detail/7/Tasks?taskId=1&handler=Update
-        btnObj.attr('formaction', `/Detail/${itemId}/Tasks?handler=Update&taskId=${taskId}&completed=${checked}&title=${newTitle}`);
+        //  /Detail/7/Tasks?handler=Update&taskId=1&completed=true&title=...
+        btnObj.attr('formaction', `/Detail/${itemId}/Tasks?handler=Update&taskId=${taskId}&completed=${checked}&title=${encodeURIComponent(newTitle)}`);
     }, false);
 
 </script>
