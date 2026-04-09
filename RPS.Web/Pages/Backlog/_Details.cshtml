@@ -4,7 +4,7 @@
     <input type="hidden" asp-for="@Model.Id" />
 
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="@Model.Title" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
             <kendo-textbox for="@Model.Title" style="width: 100%;">
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="@Model.Description" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
             <kendo-textarea for="@Model.Description" style="width: 100%; height:60px;">
@@ -20,14 +20,14 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="@Model.Estimate" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
             <kendo-slider for="@Model.Estimate" min="0" max="20" large-step="1" style="width: 100%;"></kendo-slider>
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="@Model.SelectedItemType" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
             <kendo-dropdownlist 
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="@Model.SelectedStatus" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
             <kendo-dropdownlist 
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="@Model.SelectedPriority" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
             <kendo-dropdownlist 
@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="@Model.SelectedAssigneeId" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
             <kendo-dropdownlist name="SelectedAssigneeId" value="@Model.SelectedAssigneeId" bind-to="Model.Users" style="width: 100%;"></kendo-dropdownlist>
@@ -73,7 +73,7 @@
     </div>
 
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <div class="offset-sm-2 col-sm-10">
             <button type="submit" class="btn btn-primary">Save</button>
         </div>
