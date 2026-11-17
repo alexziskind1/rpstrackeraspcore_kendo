@@ -20,9 +20,30 @@ builder.Services.AddMvc()
         options.Conventions.AddPageRoute("/Dashboard", "");
     });
 
-builder.Services.AddKendo();
+builder.Services.AddKendo(options =>
+{
+    options.DeferToScriptFiles = true;
+});
 
 var app = builder.Build();
+
+// Browser Link and browser refresh connect to other localhost ports/WebSockets in development only
+var connectSrc = app.Environment.IsDevelopment()
+    ? "'self' http://localhost:* https://localhost:* ws://localhost:* wss://localhost:*"
+    : "'self'";
+
+app.Use(async (context, next) =>
+{
+    var cspNonce = Convert.ToBase64String(System.Security.Cryptography.RandomNumberGenerator.GetBytes(16));
+    context.Items["CspNonce"] = cspNonce;
+
+    context.Response.Headers["Content-Security-Policy"] =
+        "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; " +
+        $"script-src 'self' 'nonce-{cspNonce}'; style-src 'self' 'nonce-{cspNonce}'; " +
+        $"img-src 'self' data: blob:; font-src 'self' data:; connect-src {connectSrc}";
+
+    await next();
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -37,6 +58,8 @@ else
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<Kendo.Mvc.KendoDeferredScriptsMiddleware>();
 
 app.UseRouting();
 

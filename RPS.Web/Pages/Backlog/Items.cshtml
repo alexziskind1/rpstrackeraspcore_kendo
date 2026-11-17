@@ -73,14 +73,7 @@
                     columns.Bound(i => i.Estimate).Width(100);
                     columns.Bound(i => i.DateCreated).Title("Created").Width(160);
                 })
-                .ClientRowTemplate("<tr>" +
-                    "<td><div class='pt-indicator' data-id='#:data.Id#'><img src='#:imageResFromType(data.Type)#' class='backlog-icon' /></div></td>" +
-                        "<td><img src='/#:data.AssigneeAvatar#' class='li-avatar rounded mx-auto d-block' /></td>" +
-                        "<td><span class='li-title'>#:data.Title#</span></td>" +
-                        "<td><span class='badge #:getIndicatorClass(data.Priority)#'>#:data.Priority#</span></td>" +
-                        "<td><span class='li-estimate'>#:data.Estimate#</span></td>" +
-                        "<td><span class='li-date'>#:data.DateCreated.toDateString()#</span></td>" +
-                    "</tr>")
+                .ClientRowTemplateHandler("backlogRowTemplate")
                 .Pageable()
                 .Sortable()
                 .Scrollable(scr => scr.Height(430))
@@ -144,44 +137,41 @@
 }
 
 @section scripts {
+    @{
+        var cspNonce = ViewContext.HttpContext.Items["CspNonce"]?.ToString();
+    }
+    <script nonce="@cspNonce">
+        var itemTypeIcons = {
+            PBI: '/images/icon_pbi.png',
+            Bug: '/images/icon_bug.png',
+            Chore: '/images/icon_chore.png',
+            Impediment: '/images/icon_impediment.png'
+        };
 
-    <script>
-         function imageResFromType(ptItemType) {
-            switch (ptItemType) {
-                case 'PBI':
-                    return '/images/icon_pbi.png';
-                case 'Bug':
-                    return '/images/icon_bug.png';
-                case 'Chore':
-                    return '/images/icon_chore.png';
-                case 'Impediment':
-                    return '/images/icon_impediment.png';
-                default:
-                    return '';
-            }
+        var priorityClasses = {
+            Critical: 'priority-critical',
+            High: 'priority-high',
+            Medium: 'priority-medium',
+            Low: 'priority-low'
+        };
+
+        function backlogRowTemplate(data) {
+            var created = kendo.parseDate(data.DateCreated);
+
+            return '<tr>' +
+                '<td><div class="pt-indicator" data-id="' + kendo.htmlEncode(data.Id) + '"><img src="' + (itemTypeIcons[data.Type] || '') + '" class="backlog-icon" /></div></td>' +
+                '<td><img src="/' + kendo.htmlEncode(data.AssigneeAvatar) + '" class="li-avatar rounded mx-auto d-block" /></td>' +
+                '<td><span class="li-title">' + kendo.htmlEncode(data.Title) + '</span></td>' +
+                '<td><span class="badge ' + (priorityClasses[data.Priority] || '') + '">' + kendo.htmlEncode(data.Priority) + '</span></td>' +
+                '<td><span class="li-estimate">' + kendo.htmlEncode(data.Estimate) + '</span></td>' +
+                '<td><span class="li-date">' + (created ? created.toDateString() : '') + '</span></td>' +
+                '</tr>';
         }
-
-        function getIndicatorClass(priority) {
-            switch (priority) {
-                case 'Critical':
-                    return 'priority-critical';
-                case 'High':
-                    return 'priority-high';
-                case 'Medium':
-                    return 'priority-medium';
-                case 'Low':
-                    return 'priority-low';
-                default:
-                    return '';
-            }
-        }
-
 
         function onChange(arg) {
             var rows = arg.sender.select();
-            var itemId = $($(rows[0]).find('.pt-indicator')[0]).attr('data-id');
-            window.location.href = `/Detail/${itemId}`;
+            var itemId = $(rows[0]).find('.pt-indicator').attr('data-id');
+            window.location.href = '/Detail/' + encodeURIComponent(itemId);
         }
     </script>
-
 }

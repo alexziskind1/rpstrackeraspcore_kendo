@@ -7,7 +7,7 @@
     <div class="form-group row mb-3">
         <label asp-for="@Model.Title" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
-            <kendo-textbox for="@Model.Title" style="width: 100%;">
+            <kendo-textbox for="@Model.Title">
 			</kendo-textbox>
         </div>
     </div>
@@ -15,7 +15,7 @@
     <div class="form-group row mb-3">
         <label asp-for="@Model.Description" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
-            <kendo-textarea for="@Model.Description" style="width: 100%; height:60px;">
+            <kendo-textarea for="@Model.Description">
             </kendo-textarea>
         </div>
     </div>
@@ -23,7 +23,7 @@
     <div class="form-group row mb-3">
         <label asp-for="@Model.Estimate" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
-            <kendo-slider for="@Model.Estimate" min="0" max="20" large-step="1" style="width: 100%;"></kendo-slider>
+            <kendo-slider for="@Model.Estimate" min="0" max="20" large-step="1"></kendo-slider>
         </div>
     </div>
 
@@ -34,8 +34,7 @@
                 name="SelectedItemType" 
                 value="@Model.SelectedItemType" 
                 bind-to="Model.ItemTypes" 
-                template-id="templateItemType"
-                style="width: 100%;">
+                template-handler="itemTypeTemplate">
             </kendo-dropdownlist>
         </div>
     </div>
@@ -46,8 +45,7 @@
             <kendo-dropdownlist 
                 name="SelectedStatus" 
                 value="@Model.SelectedStatus" 
-                bind-to="Model.Statuses" 
-                style="width: 100%;">
+                bind-to="Model.Statuses">
             </kendo-dropdownlist>
         </div>
     </div>
@@ -59,8 +57,7 @@
                 name="SelectedPriority" 
                 value="@Model.SelectedPriority" 
                 bind-to="Model.Priorities" 
-                template="<span class='badge priority-#:data.toLowerCase()#'>#: data #</span>"
-                style="width: 100%;">
+                template-handler="priorityTemplate">
             </kendo-dropdownlist>
         </div>
     </div>
@@ -68,7 +65,7 @@
     <div class="form-group row mb-3">
         <label asp-for="@Model.SelectedAssigneeId" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-6">
-            <kendo-dropdownlist name="SelectedAssigneeId" value="@Model.SelectedAssigneeId" bind-to="Model.Users" style="width: 100%;"></kendo-dropdownlist>
+            <kendo-dropdownlist name="SelectedAssigneeId" value="@Model.SelectedAssigneeId" bind-to="Model.Users"></kendo-dropdownlist>
         </div>
     </div>
 
@@ -79,9 +76,3 @@
         </div>
     </div>
 </form>
-
-
-<script id="templateItemType" type="text/x-kendo-template">
-    <img src="@Url.Content("~/images/icon_#:data#.png")" class="backlog-icon" />
-    <span>#: data #</span>
-</script>
