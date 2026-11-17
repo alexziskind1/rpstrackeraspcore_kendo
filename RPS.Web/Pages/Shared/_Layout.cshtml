@@ -15,7 +15,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/kendo/js/kendo.all.min.js"></script>
     <script src="~/lib/kendo/js/kendo.aspnetmvc.min.js"></script>
-    @Html.Kendo().DeferredScripts(true)
 
     @RenderSection("scripts", required: false)
 
@@ -36,6 +35,11 @@
             </div>
         </div>
     </div>
+
+    @{
+        var cspNonce = Context.Items["CspNonce"]?.ToString();
+    }
+    @Html.Kendo().DeferredScriptFile(cspNonce)
 
 </body>
 </html>

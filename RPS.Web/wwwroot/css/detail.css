@@ -10,3 +10,114 @@
     color: #495057;
     font-size: .9em;
 }
+
+.tasks-panel {
+    width: 1160px;
+    padding: 24px 16px;
+    background: white;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border: 1px rgba(33, 37, 41, 0.13) solid;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: inline-flex;
+}
+
+.tasks-inner {
+    align-self: stretch;
+    width: 550px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: normal;
+    gap: 16px;
+    display: flex;
+}
+
+.tasks-add-row {
+    justify-content: center;
+    align-items: flex-start;
+    gap: 8px;
+    display: inline-flex;
+}
+
+.tasks-separator-outer {
+    width: 1126px;
+    height: 1px;
+    padding-right: 2.81px;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+}
+
+.tasks-separator-inner {
+    width: 1123.19px;
+    height: 1px;
+    position: relative;
+    background: rgba(33, 37, 41, 0.13);
+}
+
+.task-actions {
+    border-radius: 6px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: flex;
+}
+
+.task-actions-pad {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px rgba(255, 255, 255, 0) solid;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    display: flex;
+}
+
+.task-icon-box {
+    width: 16px;
+    height: 16px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.task-icon-stack {
+    width: 16px;
+    position: relative;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: flex;
+}
+
+.pt-btn-task-update,
+.pt-btn-task-delete {
+    background: none !important;
+    border: none !important;
+    cursor: pointer;
+    width: 16px;
+    padding: 0;
+    margin: 0;
+}
+
+.pt-btn-task-update {
+    margin: 0 8px 0 0;
+}
+
+.pt-btn-task-delete {
+    color: red !important;
+}
+
+.task-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.task-icon-edit {
+    fill: #007bff;
+}
+
+.task-icon-delete {
+    fill: red;
+}

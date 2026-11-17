@@ -8,8 +8,8 @@
     <div class="container">
         <div class="row align-items-center justify-content-between">
             <div class="col-auto">
-                <div class="frame-details d-flex flex-column align-items-start gap-2" style="width: 700px;">
-                    <div class="page-title" id="itemTitle">
+                <div class="frame-details d-flex flex-column align-items-start gap-2">
+                    <div class="page-title" id="itemTitle" data-item-id="@Model.Item.Id">
                         <span class="k-icon k-i-edit"></span>
                         @Model.Item.Title
                     </div>
@@ -26,13 +26,12 @@
     </div>
 </div>
 
-<kendo-tabstrip name="tabstrip">
+<kendo-tabstrip name="tabstrip" on-select="onTabSelect">
     <items>
 
         <tabstrip-item
             text="Form"
-            selected="@Model.Screen == DetailScreenEnum.Form"
-            onclick="pushUrl('RPS Project Tracker', '/Detail/@Model.Item.Id')">
+            selected="@Model.Screen == DetailScreenEnum.Form">
 
             <content>
                 <partial name="_Details" model="@Model.DetailsFormVm" />
@@ -41,8 +40,7 @@
 
         <tabstrip-item 
             text="Tasks" 
-            selected="@Model.Screen == DetailScreenEnum.Tasks" 
-            onclick="pushUrl('RPS Project Tracker', '/Detail/@Model.Item.Id/Tasks')">
+            selected="@Model.Screen == DetailScreenEnum.Tasks">
 
             <content>
                 <partial name="_Tasks" model="@Model.TasksFormVm" />
@@ -51,8 +49,7 @@
 
         <tabstrip-item 
             text="Chitchat" 
-            selected="@Model.Screen == DetailScreenEnum.Chitchat" 
-            onclick="pushUrl('RPS Project Tracker', '/Detail/@Model.Item.Id/Chitchat')">
+            selected="@Model.Screen == DetailScreenEnum.Chitchat">
 
             <content>
                 <partial name="_Chitchat" model="@Model.ChitchatFormVm" />
@@ -84,15 +81,33 @@
 
 @section scripts {
     <partial name="_TasksScripts" />
+    @{
+        var cspNonce = ViewContext.HttpContext.Items["CspNonce"]?.ToString();
+    }
+    <script nonce="@cspNonce">
+        function itemTypeTemplate(data) {
+            return '<img src="/images/icon_' + encodeURIComponent(data) + '.png" class="backlog-icon" />' +
+                '<span>' + kendo.htmlEncode(data) + '</span>';
+        }
 
-    <script>
-        function pushUrl(title, url) {
-            if ("undefined" !== typeof history.pushState) {
-                history.pushState(null, title, url);
-            } else {
-                window.location.assign(url);
+        function priorityTemplate(data) {
+            return '<span class="badge priority-' + kendo.htmlEncode(String(data).toLowerCase()) + '">' +
+                kendo.htmlEncode(data) + '</span>';
+        }
+
+        function onTabSelect(e) {
+            var itemId = document.getElementById('itemTitle').getAttribute('data-item-id');
+            var urlsByTab = {
+                Form: '/Detail/' + itemId,
+                Tasks: '/Detail/' + itemId + '/Tasks',
+                Chitchat: '/Detail/' + itemId + '/Chitchat'
+            };
+            var tab = e.item.jquery ? e.item[0] : e.item;
+            var url = urlsByTab[tab.textContent.trim()];
+
+            if (url) {
+                history.pushState(null, 'RPS Project Tracker', url);
             }
         }
     </script>
-
 }

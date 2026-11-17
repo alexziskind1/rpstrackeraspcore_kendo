@@ -1,4 +1,8 @@
-<script>
+@{
+    var cspNonce = ViewContext.HttpContext.Items["CspNonce"]?.ToString();
+}
+
+<script nonce="@cspNonce">
 
     document.addEventListener('click', function (event) {
 

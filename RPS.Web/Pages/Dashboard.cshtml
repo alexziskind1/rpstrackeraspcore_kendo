@@ -2,6 +2,7 @@
 @model RPS.Web.Pages.DashboardModel
 
 @{
+    var cspNonce = ViewContext.HttpContext.Items["CspNonce"]?.ToString();
     var userId = ViewData["userId"];
     var months = ViewData["months"];
 }
@@ -27,8 +28,7 @@
                                             datatextfield="FullName"
                                             datavaluefield="Id"
                                             on-change="onAssigneeChange"
-                                            style="width: 260px;"
-                                            template-id="templateAssignee"
+                                            template-handler="assigneeTemplate"
                                             >
                             </kendo-combobox>
                         </div>
@@ -198,51 +198,42 @@
 
 </div>
 
+<script nonce="@cspNonce">
+    function assigneeTemplate(data) {
+        return '<div class="row assignee-item">' +
+            '<img src="/' + kendo.htmlEncode(data.Avatar) + '" class="li-avatar rounded mx-auto" />' +
+            '<span>' + kendo.htmlEncode(data.FullName) + '</span>' +
+            '</div>';
+    }
 
-<script id="templateAssignee" type="text/x-kendo-template">
-    <div class="row" style="margin-left: 5px;">
-        <img src="@Url.Content("~/#:data.Avatar#")" class="li-avatar rounded mx-auto" />
-        <span style="margin-left: 5px;">#:data.FullName#</span>
-    </div>
+    @{
+        var userIdParam = "";
+        var monthsParam = "";
+        if (userId != null)
+        {
+            userIdParam = "&userId=" + userId;
+        }
+        if (months != null)
+        {
+            monthsParam = "months=" + months;
+        }
+    }
+
+    function onAssigneeChange(e) {
+        var userId = e.sender.value();
+        if (userId) {
+            location.href = `/?userId=${userId}&@Html.Raw(monthsParam)`;
+        } else {
+            location.href = `/?@Html.Raw(monthsParam)`;
+        }
+    }
+
+    function onFilterItemClick(months) {
+        location.href = `/?months=${months}@Html.Raw(userIdParam)`;
+    }
 </script>
-
 
 @section styles {
     <link href="~/css/dashboard.css" rel="stylesheet" />
     <link href="~/css/active-issues.css" rel="stylesheet" />
-}
-
-@section scripts {
-    <script>
-
-        @{
-            var userIdParam = "";
-            var monthsParam = "";
-            if (userId != null)
-            {
-                userIdParam = "&userId=" + userId;
-            }
-            if (months != null)
-            {
-                monthsParam = "months=" + months;
-            }
-        }
-
-
-        function onAssigneeChange(e) {
-            var userId = e.sender.value();
-            if (userId) {
-                location.href = `/?userId=${userId}&@Html.Raw(monthsParam)`;
-            } else {
-                location.href = `/?@Html.Raw(monthsParam)`;
-            }
-        }
-
-
-
-        function onFilterItemClick(months) {
-              location.href = `/?months=${months}@Html.Raw(userIdParam)`;
-        }
-
-    </script>
 }
